@@ -2,8 +2,8 @@ const { status } = require("express/lib/response");
 const User = require("../models/userModel");
 
 const getAllUsers = async (req, res) => {
-  console.log(req.query);
-  const allUsers = await User.find({});
+  const queryObj = req.query; // used for query obj
+  const allUsers = await User.find(queryObj);
   return res.status(200).json({
     status: "success",
     results: allUsers.length,
