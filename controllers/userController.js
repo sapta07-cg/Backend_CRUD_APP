@@ -1,9 +1,11 @@
 const { status } = require("express/lib/response");
 const User = require("../models/userModel");
+const ApiFeatures = require("../Utils/ApiFeatures");
 
 const getAllUsers = async (req, res) => {
-  const queryObj = req.query; // used for query obj
-  const allUsers = await User.find(queryObj);
+  const features = new ApiFeatures(User.find(), req.query).paginate();
+  let allUsers = await features.query; // here query property is going to store a query object
+
   return res.status(200).json({
     status: "success",
     results: allUsers.length,
@@ -56,6 +58,8 @@ const createUser = async (req, res) => {
     email: body.email,
     gender: body.gender,
     jobTitle: body.jobTitle,
+    salary: body.salary,
+    age: body.age,
   });
 
   return res.status(201).json({
@@ -79,6 +83,12 @@ const updateUser = async (req, res) => {
   });
 };
 
+const getTopEmployees = (req, res, next) => {
+  req.query.limit = 3;
+
+  next();
+};
+
 module.exports = {
   getAllUsers,
   getSingleUser,
@@ -86,4 +96,5 @@ module.exports = {
   createUser,
   checkBody,
   updateUser,
+  getTopEmployees,
 };

@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 
 //Schema
@@ -24,6 +25,12 @@ const userSchema = new mongoose.Schema(
     },
     jobTitle: {
       type: String,
+    },
+    salary: {
+      type: Number,
+    },
+    age: {
+      type: Number,
     },
   },
   { timestamps: true }

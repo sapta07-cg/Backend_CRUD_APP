@@ -9,7 +9,10 @@ const {
   checkBody,
   createUser,
   updateUser,
+  getTopEmployees,
 } = require("../controllers/userController");
+
+router.route("/topemployees").get(getTopEmployees, getAllUsers);
 
 router.route("/").get(getAllUsers).post(checkBody, createUser);
 
